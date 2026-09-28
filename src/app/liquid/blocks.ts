@@ -50,7 +50,11 @@ export const useBlocks = (api: AxiosInstance): BlockLiquidInstance => {
   };
 
   const getBlocks = async (params: { start_height?: number }) => {
-    const { data } = await api.get<Block[]>(`/v1/blocks/${params.start_height}`);
+    const path =
+      params.start_height === undefined
+        ? `/v1/blocks`
+        : `/v1/blocks/${params.start_height}`;
+    const { data } = await api.get<Block[]>(path);
     return data;
   };
 
